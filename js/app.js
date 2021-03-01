@@ -25,7 +25,7 @@ let busProducts = [
 ];
 
 const buttonsDisplay = document.getElementById('buttons');
-let resultsButton;
+let resultsButton ;
 const imageSection = document.getElementById('imageSection');
 const leftImage = document.getElementById('leftImage');
 const centerImage = document.getElementById('centerImage');
@@ -167,8 +167,9 @@ function handelClick(event) {
       if (Bus.counter === clickCounter){
         resultsButton = document.createElement('button');
         buttonsDisplay.appendChild(resultsButton);
-        //buttonsDisplay.textContent = 'Show Results';
+        resultsButton.textContent = 'Show Results';
         resultsButton.id = 'results';
+        resultsButton.onclick = showResults;
       }
 
     }
@@ -188,7 +189,7 @@ function randomNumber(min, max) {
 
 function showResults () {
 
-  resultsButton.parentNode.removeChild(resultsButton);
+  // resultsButton.parentNode.removeChild(resultsButton);
 
   const resultsList = document.createElement('ul');
   buttonsDisplay.appendChild(resultsList);
@@ -204,6 +205,8 @@ function showResults () {
 }
 renderNewProduct();
 
-resultsButton.onclick = showResults();
+// buttonsDisplay.innerHTML = 'View results';
+// buttonsDisplay.addEventListener('click', showResults);
+
 
 
