@@ -12,7 +12,7 @@
   }
 
   header {
-    background: #393e46;
+    background: #763857;
     display: grid;
     grid-template-columns: 100px 1fr;
     align-items: center;
@@ -24,12 +24,12 @@
   
   header nav a {
     text-decoration: none;
-    color: #eee;
+    color: #eff0b6;
     padding: 0 20px;
   }
   
   header nav a:hover {
-    background: #ffd369;
+    background: #fbeeac;
     color: #393e46;
   }
 
@@ -45,15 +45,15 @@
 
   .image-section {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
     gap: 20px;
   }
   
   footer {
     display: flex;
     align-items: center;
-    background: #222831;
-    color: #eee;
+    background: #8f4068;
+    color: #eff0b6;
     text-align: center;
   }
   

@@ -24,7 +24,8 @@ let busProducts = [
   'wine-glass'
 ];
 
-
+const buttonsDisplay = document.getElementById('buttons');
+let resultsButton;
 const imageSection = document.getElementById('imageSection');
 const leftImage = document.getElementById('leftImage');
 const centerImage = document.getElementById('centerImage');
@@ -47,7 +48,7 @@ function Bus(name) {
 }
 
 Bus.all = [];
-Bus.counter = 0;
+Bus.counter = 1;
 
 for (let i = 0; i < busProducts.length; i++) {
   new Bus(busProducts[i]);
@@ -59,23 +60,23 @@ function renderNewProduct() {
 
 
   switch (leftIndex) {
-    case 14:
+  case 14:
 
-      leftImage.src = Bus.all[leftIndex].image2;
-      leftImage.alt = Bus.all[leftIndex].name;
-      leftProductIndex = leftIndex;
-      break;
+    leftImage.src = Bus.all[leftIndex].image2;
+    leftImage.alt = Bus.all[leftIndex].name;
+    leftProductIndex = leftIndex;
+    break;
 
-    case 17:
-      leftImage.src = Bus.all[leftIndex].image3;
-      leftImage.alt = Bus.all[leftIndex].name;
-      leftProductIndex = leftIndex;
-      break;
+  case 17:
+    leftImage.src = Bus.all[leftIndex].image3;
+    leftImage.alt = Bus.all[leftIndex].name;
+    leftProductIndex = leftIndex;
+    break;
 
-    default:
-      leftImage.src = Bus.all[leftIndex].image;
-      leftImage.alt = Bus.all[leftIndex].name;
-      leftProductIndex = leftIndex;
+  default:
+    leftImage.src = Bus.all[leftIndex].image;
+    leftImage.alt = Bus.all[leftIndex].name;
+    leftProductIndex = leftIndex;
 
   }
 
@@ -87,22 +88,22 @@ function renderNewProduct() {
 
   switch (centerIndex) {
 
-    case 14:
-      centerImage.src = Bus.all[centerIndex].image2;
-      centerImage.alt = Bus.all[centerIndex].name;
-      centerProductIndex = centerIndex;
-      break;
+  case 14:
+    centerImage.src = Bus.all[centerIndex].image2;
+    centerImage.alt = Bus.all[centerIndex].name;
+    centerProductIndex = centerIndex;
+    break;
 
-    case 17:
-      centerImage.src = Bus.all[centerIndex].image3;
-      centerImage.alt = Bus.all[centerIndex].name;
-      centerProductIndex = centerIndex;
-      break;
+  case 17:
+    centerImage.src = Bus.all[centerIndex].image3;
+    centerImage.alt = Bus.all[centerIndex].name;
+    centerProductIndex = centerIndex;
+    break;
 
-    default:
-      centerImage.src = Bus.all[centerIndex].image;
-      centerImage.alt = Bus.all[centerIndex].name;
-      centerProductIndex = centerIndex;
+  default:
+    centerImage.src = Bus.all[centerIndex].image;
+    centerImage.alt = Bus.all[centerIndex].name;
+    centerProductIndex = centerIndex;
 
   }
 
@@ -163,6 +164,13 @@ function handelClick(event) {
       renderNewProduct();
 
       console.log(Bus.all);
+      if (Bus.counter === clickCounter){
+        resultsButton = document.createElement('button');
+        buttonsDisplay.appendChild(resultsButton);
+        //buttonsDisplay.textContent = 'Show Results';
+        resultsButton.id = 'results';
+      }
+
     }
   }
 }
@@ -176,9 +184,26 @@ function randomNumber(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+
+
+function showResults () {
+
+  resultsButton.parentNode.removeChild(resultsButton);
+
+  const resultsList = document.createElement('ul');
+  buttonsDisplay.appendChild(resultsList);
+
+  for(let i = 0; i < busProducts.length; i++) {
+
+    const resultsListItem = document.createElement('li');
+    resultsList.appendChild(resultsListItem);
+    resultsListItem.textContent = `${busProducts[i].name} clicked ${busProducts[i].clicks} times.`;
+  }
+
+
+}
 renderNewProduct();
 
-/*leftImage.src = Bus.all[0].image;
-centerImage.src = Bus.all[4].image;
-rightImage.src = Bus.all[5].image;*/
+resultsButton.onclick = showResults();
+
 
