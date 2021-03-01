@@ -2,30 +2,31 @@
 
 let busProducts = [
 
-  'bag',
-  'banana',
-  'bathroom',
-  'boots',
-  'breakfast',
-  'bubblegum',
-  'chair',
-  'cthulhu',
-  'dog-duck',
-  'dragon',
-  'pen',
-  'pet-sweep',
-  'scissors',
-  'shark',
-  'sweep',
-  'tauntaun',
-  'unicorn',
-  'usb',
-  'water-can',
-  'wine-glass'
+  'bag.jpg',
+  'banana.jpg',
+  'bathroom.jpg',
+  'boots.jpg',
+  'breakfast.jpg',
+  'bubblegum.jpg',
+  'chair.jpg',
+  'cthulhu.jpg',
+  'dog-duck.jpg',
+  'dragon.jpg',
+  'pen.jpg',
+  'pet-sweep.jpg',
+  'scissors.jpg',
+  'shark.jpg',
+  'sweep.png',
+  'tauntaun.jpg',
+  'unicorn.jpg',
+  'usb.gif',
+  'water-can.jpg',
+  'wine-glass.jpg'
 ];
 
 const buttonsDisplay = document.getElementById('buttons');
-let resultsButton;
+let resultsButton ;
+//document.getElementById('buttons').style.color = '#FF8040';
 const imageSection = document.getElementById('imageSection');
 const leftImage = document.getElementById('leftImage');
 const centerImage = document.getElementById('centerImage');
@@ -37,11 +38,9 @@ let rightProductIndex = 0;
 const clickCounter = 25;
 
 
-function Bus(name) {
+function Bus(name,image) {
   this.name = name;
-  this.image = `./Images/${name}.jpg`;
-  this.image2 = `./Images/${name}.png`;
-  this.image3 = `./Images/${name}.gif`;
+  this.image = `./Images/${image}`;
   this.clicks = 0;
   this.shown = 0;
   Bus.all.push(this);
@@ -50,35 +49,29 @@ function Bus(name) {
 Bus.all = [];
 Bus.counter = 1;
 
-for (let i = 0; i < busProducts.length; i++) {
-  new Bus(busProducts[i]);
+for (let i = 0; i < busProducts.length; i++){
+
+  new Bus (getName(busProducts[i]),busProducts[i]);
+
+}
+
+function getName (fileName){
+  return fileName.split('.').slice(0,-1).join('.');
+
+  /*
+ return fileName.split('.')[0];
+ return fileName.split('.')[1];
+  */
+
 }
 
 function renderNewProduct() {
+
   let leftIndex = randomNumber(0, Bus.all.length - 1);
+  leftImage.src = Bus.all[leftIndex].image;
+  leftImage.alt = Bus.all[leftIndex].name;
+  leftProductIndex = leftIndex;
 
-
-
-  switch (leftIndex) {
-  case 14:
-
-    leftImage.src = Bus.all[leftIndex].image2;
-    leftImage.alt = Bus.all[leftIndex].name;
-    leftProductIndex = leftIndex;
-    break;
-
-  case 17:
-    leftImage.src = Bus.all[leftIndex].image3;
-    leftImage.alt = Bus.all[leftIndex].name;
-    leftProductIndex = leftIndex;
-    break;
-
-  default:
-    leftImage.src = Bus.all[leftIndex].image;
-    leftImage.alt = Bus.all[leftIndex].name;
-    leftProductIndex = leftIndex;
-
-  }
 
   let centerIndex;
 
@@ -86,27 +79,9 @@ function renderNewProduct() {
     centerIndex = randomNumber(0, Bus.all.length - 1);
   } while (leftIndex === centerIndex);
 
-  switch (centerIndex) {
-
-  case 14:
-    centerImage.src = Bus.all[centerIndex].image2;
-    centerImage.alt = Bus.all[centerIndex].name;
-    centerProductIndex = centerIndex;
-    break;
-
-  case 17:
-    centerImage.src = Bus.all[centerIndex].image3;
-    centerImage.alt = Bus.all[centerIndex].name;
-    centerProductIndex = centerIndex;
-    break;
-
-  default:
-    centerImage.src = Bus.all[centerIndex].image;
-    centerImage.alt = Bus.all[centerIndex].name;
-    centerProductIndex = centerIndex;
-
-  }
-
+  centerImage.src = Bus.all[centerIndex].image;
+  centerImage.alt = Bus.all[centerIndex].name;
+  centerProductIndex = centerIndex;
 
   let rightIndex;
 
@@ -114,26 +89,10 @@ function renderNewProduct() {
     rightIndex = randomNumber(0, Bus.all.length - 1);
   } while (leftIndex === rightIndex || centerIndex === rightIndex);
 
-  switch (rightIndex) {
+  rightImage.src = Bus.all[rightIndex].image;
+  rightImage.alt = Bus.all[rightIndex].name;
+  rightProductIndex = rightIndex;
 
-  case 14:
-    rightImage.src = Bus.all[rightIndex].image2;
-    rightImage.alt = Bus.all[rightIndex].name;
-    rightProductIndex = rightIndex;
-    break;
-
-  case 17:
-    rightImage.src = Bus.all[rightIndex].image3;
-    rightImage.alt = Bus.all[rightIndex].name;
-    rightProductIndex = rightIndex;
-    break;
-
-  default:
-    rightImage.src = Bus.all[rightIndex].image;
-    rightImage.alt = Bus.all[rightIndex].name;
-    rightProductIndex = rightIndex;
-
-  }
 
 
   Bus.all[leftIndex].shown++;
@@ -167,8 +126,9 @@ function handelClick(event) {
       if (Bus.counter === clickCounter){
         resultsButton = document.createElement('button');
         buttonsDisplay.appendChild(resultsButton);
-        //buttonsDisplay.textContent = 'Show Results';
+        resultsButton.textContent = 'Show Results';
         resultsButton.id = 'results';
+        resultsButton.onclick = showResults;
       }
 
     }
@@ -185,25 +145,36 @@ function randomNumber(min, max) {
 }
 
 
-
 function showResults () {
 
-  resultsButton.parentNode.removeChild(resultsButton);
+  // resultsButton.parentNode.removeChild(resultsButton);
 
   const resultsList = document.createElement('ul');
   buttonsDisplay.appendChild(resultsList);
 
-  for(let i = 0; i < busProducts.length; i++) {
+  for(let i = 0; i < Bus.all.length; i++) {
 
     const resultsListItem = document.createElement('li');
     resultsList.appendChild(resultsListItem);
-    resultsListItem.textContent = `${busProducts[i].name} clicked ${busProducts[i].clicks} times.`;
+    resultsListItem.textContent = `${Bus.all[i].name} was shown ${Bus.all[i].shown} times and was clicked ${Bus.all[i].clicks} times.`;
   }
+  resultsButton.parentNode.removeChild(resultsButton);
 
+  const resetButton = document.createElement('button');
+  buttonsDisplay.appendChild(resetButton);
+  resetButton.textContent = 'Reset voting';
+  resetButton.id = 'reset';
+  resetButton.onclick = resetVoting;
+}
 
+function resetVoting () {
+
+  window.location.reload();
 }
 renderNewProduct();
 
-resultsButton.onclick = showResults();
+// buttonsDisplay.innerHTML = 'View results';
+// buttonsDisplay.addEventListener('click', showResults);
+
 
 
