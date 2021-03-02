@@ -202,8 +202,7 @@ function renderChart() {
 
   }
   let ctx = document.getElementById('myChart').getContext('2d');
-  function Chart(){}
-  new Chart(ctx, {
+  let myChart = new Chart(ctx, {
     type: 'bar',
     data: {
       labels: nameArray,
