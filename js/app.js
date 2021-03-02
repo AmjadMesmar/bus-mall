@@ -59,7 +59,7 @@ if(getData()){
   for (let i = 0; i < busProducts.length; i++) {
 
     new Bus(getName(busProducts[i]), busProducts[i]);
-  
+
   }
 }
 
@@ -80,7 +80,7 @@ function renderNewProduct() {
 
   do {
     leftIndex = randomNumber(0, Bus.all.length - 1);
-  } while (indexCheckArray.includes(leftIndex) === true);
+  } while (indexCheckArray.includes(leftIndex));
 
   leftImage.src = Bus.all[leftIndex].image;
   leftImage.alt = Bus.all[leftIndex].name;
@@ -92,7 +92,7 @@ function renderNewProduct() {
 
   do {
     centerIndex = randomNumber(0, Bus.all.length - 1);
-  } while (leftIndex === centerIndex || indexCheckArray.includes(centerIndex) === true);
+  } while (leftIndex === centerIndex || indexCheckArray.includes(centerIndex));
 
   centerImage.src = Bus.all[centerIndex].image;
   centerImage.alt = Bus.all[centerIndex].name;
@@ -103,7 +103,7 @@ function renderNewProduct() {
 
   do {
     rightIndex = randomNumber(0, Bus.all.length - 1);
-  } while (leftIndex === rightIndex || centerIndex === rightIndex || indexCheckArray.includes(rightIndex) === true);
+  } while (leftIndex === rightIndex || centerIndex === rightIndex || indexCheckArray.includes(rightIndex));
 
   rightImage.src = Bus.all[rightIndex].image;
   rightImage.alt = Bus.all[rightIndex].name;
@@ -145,13 +145,13 @@ function handelClick(event) {
       console.log(Bus.all);
 
       if (Bus.counter === clickCounter) {
-        console.log('end session')
         setData();
         resultsButton = document.createElement('button');
         buttonsDisplay.appendChild(resultsButton);
         resultsButton.textContent = 'Show Results';
         resultsButton.id = 'results';
         resultsButton.onclick = showResults;
+        imageSection.removeEventListener('click',handelClick);
       }
 
 
