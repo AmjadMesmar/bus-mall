@@ -38,6 +38,9 @@ let rightProductIndex = 0;
 let indexCheckArray = [];
 const clickCounter = 25;
 
+const resultsList = document.createElement('ul');
+buttonsDisplay.appendChild(resultsList);
+resultsList.id = 'ulDisplay';
 
 function Bus(name, image) {
   this.name = name;
@@ -50,11 +53,16 @@ function Bus(name, image) {
 Bus.all = [];
 Bus.counter = 0;
 
-for (let i = 0; i < busProducts.length; i++) {
+if(getData()){
+  Bus.all = getData();
+} else {
+  for (let i = 0; i < busProducts.length; i++) {
 
-  new Bus(getName(busProducts[i]), busProducts[i]);
-
+    new Bus(getName(busProducts[i]), busProducts[i]);
+  
+  }
 }
+
 
 function getName(fileName) {
   return fileName.split('.').slice(0, -1).join('.');
@@ -137,6 +145,8 @@ function handelClick(event) {
       console.log(Bus.all);
 
       if (Bus.counter === clickCounter) {
+        console.log('end session')
+        setData();
         resultsButton = document.createElement('button');
         buttonsDisplay.appendChild(resultsButton);
         resultsButton.textContent = 'Show Results';
@@ -158,13 +168,19 @@ function randomNumber(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+function getData() {
+  const data = localStorage.getItem('ulDisplay');
+  return JSON.parse(data);
+}
+
+function setData() {
+  localStorage.setItem( 'ulDisplay', JSON.stringify( Bus.all ) );
+}
+
 
 function showResults() {
 
   // resultsButton.parentNode.removeChild(resultsButton);
-
-  const resultsList = document.createElement('ul');
-  buttonsDisplay.appendChild(resultsList);
 
   for (let i = 0; i < Bus.all.length; i++) {
 
